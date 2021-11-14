@@ -1,0 +1,60 @@
+{
+  "stms": {
+    "title": {
+      "long": "LabOS test task",
+      "short": "LabOS"
+    },
+    "menu": {
+      "patients": "Patients",
+      "examples": "Examples",
+      "orders": "Orders",
+      "login": "Sign in",
+      "logout": "Logout",
+      "settings": "Settings",
+      "favorites": "Favorites"
+    },
+    "settings": {
+      "animations": {
+        "elements": "Navigation page elements slide up",
+        "page": "Navigation whole page transition",
+        "title": "Animations"
+      },
+      "general": {
+        "language": {
+          "en": "English",
+          "he": "Hebrew"
+        },
+        "placeholder": "Language",
+        "title": "General"
+      },
+      "themes": {
+        "cyan": "Cyan",
+        "dark": "Dark",
+        "light": "Light",
+        "nature": "Nature",
+        "night-mode": "Auto night mode (from 21:00 to 7:00)",
+        "placeholder": "Color Theme",
+        "sticky-header": "Sticky header",
+        "title": "Themes"
+      },
+      "title": "Settings"
+    },
+    "patients": {
+      "title": "Patients",
+      "get-patients": "Get patients",
+      "loading": "Patients list is loading, please wait",
+      "empty-state-message": "Patients list is empty."
+    },
+    "orders": {
+      "title": "Orders",
+      "get-orders": "Get orders",
+      "loading": "Orders list is loading, please wait",
+      "empty-state-message": "Orders list is empty."
+    },
+    "favorites": {
+      "title": "Favorites",
+      "empty-state-message": "List is empty. Set any item as Favorite to see it here.",
+      "favorite": "Favorite"
+    }
+  }
+}

@@ -1,0 +1,44 @@
+<div class="container">
+  <div rtl>
+    <h1 class="main-heading">{{ 'stms.orders.title' | translate }}</h1>
+
+    <div class="actions">
+
+      <p *ngIf="!(sideEffects$ | async).loaded">{{ 'stms.orders.empty-state-message' | translate }}</p>
+
+      <p *ngIf="(sideEffects$ | async).errorMessage as error">{{ error }}</p>
+
+      <ng-container *ngIf="(sideEffects$ | async).loading">
+        <mat-spinner></mat-spinner>
+        <div>{{ 'stms.orders.loading' | translate }}</div>        
+      </ng-container>
+
+      <ng-container *ngIf="(sideEffects$ | async) as sideEffects">
+        <div *ngIf="sideEffects.loaded && (ordersList$ | async)">
+          <div *ngFor="let order of ordersList$ | async">
+
+            {{ order.orderName }}
+            <span>{{ order.creationDate.formattedDate }}: {{ order.creationDate.formattedTime }}</span>
+
+            <span *ngIf="isAddedToFavorite(order)">
+              [{{ 'stms.favorites.favorite' | translate }}]
+            </span>
+          
+            <button mat-icon-button mat-raised-button 
+                    [color]="isAddedToFavorite(order) ? 'primary' : 'accent'"
+                    (click)="onFavoritesToggle(order)"
+            >
+              <mat-icon>favorite</mat-icon>
+            </button>
+
+          </div>
+          <mat-divider></mat-divider>
+        </div>
+      </ng-container>
+
+      <button mat-raised-button class="actions-main" color="primary" (click)="onLoadOrdersClick()">
+        {{ 'stms.orders.get-orders' | translate }}
+      </button>
+    </div>
+  </div>
+</div>

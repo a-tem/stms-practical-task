@@ -1,0 +1,57 @@
+<!-- <div class="container">
+  <div rtl>
+    <h1 class="main-heading">{{ 'stms.patients.title' | translate }}</h1>
+    <div class="actions">
+      <a mat-raised-button class="actions-main" color="primary" routerLink="../settings">
+        {{ 'stms.patients.get-patients' | translate }}
+      </a>
+      
+    </div>
+  </div>
+</div> -->
+
+
+<div class="container">
+  <div rtl>
+    <h1 class="main-heading">{{ 'stms.patients.title' | translate }}</h1>
+
+    <div class="actions">
+
+      <p *ngIf="!(sideEffects$ | async).loaded">{{ 'stms.patients.empty-state-message' | translate }}</p>
+
+      <p *ngIf="(sideEffects$ | async).errorMessage as error">{{ error }}</p>
+
+      <ng-container *ngIf="(sideEffects$ | async).loading">
+        <mat-spinner></mat-spinner>
+        <div>{{ 'stms.patients.loading' | translate }}</div>        
+      </ng-container>
+
+      <ng-container *ngIf="(sideEffects$ | async) as sideEffects">
+        <div *ngIf="sideEffects.loaded && (patientsList$ | async)">
+          <div *ngFor="let patient of patientsList$ | async">
+
+            {{ patient.fullName }}
+            <span>{{ patient.birthDate.formattedDate }}</span>
+
+            <span *ngIf="isAddedToFavorite(patient)">
+              [{{ 'stms.favorites.favorite' | translate }}]
+            </span>
+          
+            <button mat-icon-button mat-raised-button 
+                    [color]="isAddedToFavorite(patient) ? 'primary' : 'accent'"
+                    (click)="onFavoritesToggle(patient)"
+            >
+              <mat-icon>favorite</mat-icon>
+            </button>
+
+          </div>
+          <mat-divider></mat-divider>
+        </div>
+      </ng-container>
+
+      <button mat-raised-button class="actions-main" color="primary" (click)="onLoadPatientsClick()">
+        {{ 'stms.patients.get-patients' | translate }}
+      </button>
+    </div>
+  </div>
+</div>

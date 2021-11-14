@@ -1,0 +1,37 @@
+<div class="container">
+  <div rtl>
+    <h1 class="main-heading">{{ 'stms.favorites.title' | translate }}</h1>
+
+    <div class="actions">
+
+      <ng-container *ngIf="favoriteItemsList$ | async as favoriteItemsList">
+        <div *ngIf="!favoriteItemsList.length"> {{ 'stms.favorites.empty-state-message' | translate }} </div>
+
+        <ng-container *ngIf="favoriteItemsList.length">
+          
+          <div *ngFor="let item of favoriteItemsList">
+            <ng-container *ngTemplateOutlet="itemIsOrder(item) ? orderItem : patientItem; context: {$implicit: item}">
+
+            </ng-container>
+
+            <button mat-icon-button mat-raised-button (click)="onRemoveItemFromFavoriteClick(item)">
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+
+        </ng-container>
+
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+<ng-template #orderItem let-item>
+  {{ item.orderName }}
+  <span>{{ item.creationDate.formattedDate }}: {{ item.creationDate.formattedTime }}</span>
+</ng-template>
+
+<ng-template #patientItem let-item>
+  {{ item.fullName }}
+  <span>{{ item.birthDate.formattedDate }}</span>
+</ng-template>
