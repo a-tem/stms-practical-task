@@ -1,8 +1,8 @@
 <mat-form-field class="example-form-field" appearance="fill">
-  <mat-label>Clearable input</mat-label>
+  <mat-label>{{ 'stms.shared.filter-input.placeholder' | translate }}</mat-label>
   <input matInput name="topic" type="text" [formControl]="filterControl">
 
   <button matSuffix mat-icon-button aria-label="Clear" (click)="clearFilter()">
-    <mat-icon>close</mat-icon>
+    <fa-icon icon="times"></fa-icon>
   </button>
 </mat-form-field>

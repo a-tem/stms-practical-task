@@ -55,6 +55,11 @@
       "title": "Favorites",
       "empty-state-message": "List is empty. Set any item as Favorite to see it here.",
       "favorite": "Favorite"
+    },
+    "shared": {
+      "filter-input": {
+        "placeholder": "Clearable input"
+      }
     }
   }
 }

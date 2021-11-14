@@ -20,26 +20,26 @@
       </ng-container>
 
       <ng-container *ngIf="(sideEffects$ | async) as sideEffects">
-        <div *ngIf="sideEffects.loaded && filteredList.length">
-          <div *ngFor="let order of filteredList">
+        <mat-list *ngIf="sideEffects.loaded && filteredList.length">
+          <mat-list-item *ngFor="let order of filteredList">
 
             {{ order.orderName }}
             <span>{{ order.creationDate.formattedDate }}: {{ order.creationDate.formattedTime }}</span>
-
+            &nbsp;
             <span *ngIf="isAddedToFavorite(order)">
               [{{ 'stms.favorites.favorite' | translate }}]
             </span>
-          
+            &nbsp;
             <button mat-icon-button mat-raised-button 
                     [color]="isAddedToFavorite(order) ? 'primary' : 'accent'"
                     (click)="onFavoritesToggle(order)"
             >
-              <mat-icon>favorite</mat-icon>
+              <fa-icon icon="star"></fa-icon>
             </button>
 
-          </div>
+          </mat-list-item>
           <mat-divider></mat-divider>
-        </div>
+        </mat-list>
       </ng-container>
 
       <button mat-raised-button class="actions-main" color="primary" (click)="onLoadOrdersClick()">

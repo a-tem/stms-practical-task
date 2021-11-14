@@ -28,12 +28,8 @@ export class FavoritesComponent implements OnInit {
     this.favoriteItemsList$ = this.store.select(selectFavoriteItemsList)
   }
 
-  getItemPreview(item: TFavoritesItem) {
-    
-  }
-
   onRemoveItemFromFavoriteClick(item: TFavoritesItem) {
-    const key = this.itemIsOrder? 'identifier' : 'code';
+    const key = (item as Order)?.identifier ? 'identifier' : 'code';
 
     this.store.dispatch(FavoritesActions.toggleFavorite({ id: item[key] }))
   }

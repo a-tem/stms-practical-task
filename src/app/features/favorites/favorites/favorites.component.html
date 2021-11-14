@@ -7,21 +7,20 @@
       <ng-container *ngIf="favoriteItemsList$ | async as favoriteItemsList">
         <div *ngIf="!favoriteItemsList.length"> {{ 'stms.favorites.empty-state-message' | translate }} </div>
 
-        <ng-container *ngIf="favoriteItemsList.length">
+        <mat-list *ngIf="favoriteItemsList.length">
           
-          <div *ngFor="let item of favoriteItemsList">
-            <ng-container *ngTemplateOutlet="itemIsOrder(item) ? orderItem : patientItem; context: {$implicit: item}">
-
-            </ng-container>
-
-            <button mat-icon-button mat-raised-button (click)="onRemoveItemFromFavoriteClick(item)">
-              <mat-icon>close</mat-icon>
+          <mat-list-item *ngFor="let item of favoriteItemsList">
+            <ng-container *ngTemplateOutlet="itemIsOrder(item) ? orderItem : patientItem; context: {$implicit: item}"></ng-container>
+            &nbsp;
+            <button mat-icon-button mat-raised-button color="accent" (click)="onRemoveItemFromFavoriteClick(item)">
+              <fa-icon icon="times"></fa-icon>
             </button>
-          </div>
+          </mat-list-item>
 
-        </ng-container>
-
+        </mat-list>
+          
       </ng-container>
+   
     </div>
   </div>
 </div>
