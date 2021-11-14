@@ -50,11 +50,13 @@ import { faMediumM, faGithub } from "@fortawesome/free-brands-svg-icons";
 import { BigInputComponent } from "./components/big-input/big-input/big-input.component";
 import { BigInputActionComponent } from "./components/big-input/big-input-action/big-input-action.component";
 import { RtlSupportDirective } from "./directives/rtl-support/rtl-support.directive";
+import { FilterInputComponent } from "./components/filter-input/filter-input.component";
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
 
     TranslateModule,
 
@@ -79,7 +81,8 @@ import { RtlSupportDirective } from "./directives/rtl-support/rtl-support.direct
   declarations: [
     BigInputComponent,
     BigInputActionComponent,
-    RtlSupportDirective
+    RtlSupportDirective,
+    FilterInputComponent
   ],
   exports: [
     CommonModule,
@@ -111,7 +114,8 @@ import { RtlSupportDirective } from "./directives/rtl-support/rtl-support.direct
 
     BigInputComponent,
     BigInputActionComponent,
-    RtlSupportDirective
+    RtlSupportDirective,
+    FilterInputComponent
   ]
 })
 export class SharedModule {

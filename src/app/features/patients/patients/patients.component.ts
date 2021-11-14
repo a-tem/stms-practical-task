@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from "@angular/core";
+import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef } from "@angular/core";
 import { Store } from "@ngrx/store";
 
 import * as PatientsActions from '../_state/patients.actions';
@@ -9,7 +9,7 @@ import { ROUTE_ANIMATIONS_ELEMENTS } from "../../../core/core.module";
 import { Patient } from "@models/patient.model";
 import { ISideEffect } from "@models/side-effects.model";
 import { Observable, of, Subscription } from "rxjs";
-import { tap } from "rxjs/operators";
+import { FormControl } from "@angular/forms";
 
 @Component({
   selector: "st-patients",
@@ -21,16 +21,26 @@ export class PatientsComponent implements OnInit, OnDestroy {
   routeAnimationsElements = ROUTE_ANIMATIONS_ELEMENTS;
 
   patientsList$: Observable<Patient[]> = of([]);
+  filteredList: Patient[] = [];
   sideEffects$: Observable<ISideEffect>;
   favoriteIdsList$: Observable<string[]> = of([]);
   favoriteItemsIds = [];
   subs$ = new Subscription();
 
-  constructor(private globalStore: Store) {}
+  filterControl: FormControl;
+
+  constructor(
+    private globalStore: Store,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     this.patientsList$ = this.globalStore
-      .select(PatientsSelectors.selectPatientsList);
+      .select(PatientsSelectors.selectPatientsList)
+
+    const patientsListSubs = this.patientsList$.subscribe(list => this.filteredList = list);
+
+    this.subs$.add(patientsListSubs);
 
     this.sideEffects$ = this.globalStore
       .select(PatientsSelectors.selectSideEffectsStatus);
@@ -52,6 +62,11 @@ export class PatientsComponent implements OnInit, OnDestroy {
 
   isAddedToFavorite(patient: Patient): boolean {
     return this.favoriteItemsIds.includes(patient.code);
+  }
+
+  setFilteredList(list: Patient[]) {
+    this.filteredList = list;
+    this.cdr.markForCheck();
   }
 
   ngOnDestroy() {

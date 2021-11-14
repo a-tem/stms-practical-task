@@ -1,16 +1,3 @@
-<!-- <div class="container">
-  <div rtl>
-    <h1 class="main-heading">{{ 'stms.patients.title' | translate }}</h1>
-    <div class="actions">
-      <a mat-raised-button class="actions-main" color="primary" routerLink="../settings">
-        {{ 'stms.patients.get-patients' | translate }}
-      </a>
-      
-    </div>
-  </div>
-</div> -->
-
-
 <div class="container">
   <div rtl>
     <h1 class="main-heading">{{ 'stms.patients.title' | translate }}</h1>
@@ -21,14 +8,20 @@
 
       <p *ngIf="(sideEffects$ | async).errorMessage as error">{{ error }}</p>
 
+      <st-filter-input *ngIf="(sideEffects$ | async).loaded"
+        [obsList]="patientsList$"
+        filterBy="firstName"
+        (onFilter)="setFilteredList($event)"
+      ></st-filter-input>
+
       <ng-container *ngIf="(sideEffects$ | async).loading">
         <mat-spinner></mat-spinner>
         <div>{{ 'stms.patients.loading' | translate }}</div>        
       </ng-container>
 
       <ng-container *ngIf="(sideEffects$ | async) as sideEffects">
-        <div *ngIf="sideEffects.loaded && (patientsList$ | async)">
-          <div *ngFor="let patient of patientsList$ | async">
+        <div *ngIf="sideEffects.loaded && filteredList.length">
+          <div *ngFor="let patient of filteredList">
 
             {{ patient.fullName }}
             <span>{{ patient.birthDate.formattedDate }}</span>

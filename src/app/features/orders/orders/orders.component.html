@@ -8,14 +8,20 @@
 
       <p *ngIf="(sideEffects$ | async).errorMessage as error">{{ error }}</p>
 
+      <st-filter-input *ngIf="(sideEffects$ | async).loaded"
+        [obsList]="ordersList$"
+        filterBy="orderName"
+        (onFilter)="setFilteredList($event)"
+      ></st-filter-input>
+
       <ng-container *ngIf="(sideEffects$ | async).loading">
         <mat-spinner></mat-spinner>
         <div>{{ 'stms.orders.loading' | translate }}</div>        
       </ng-container>
 
       <ng-container *ngIf="(sideEffects$ | async) as sideEffects">
-        <div *ngIf="sideEffects.loaded && (ordersList$ | async)">
-          <div *ngFor="let order of ordersList$ | async">
+        <div *ngIf="sideEffects.loaded && filteredList.length">
+          <div *ngFor="let order of filteredList">
 
             {{ order.orderName }}
             <span>{{ order.creationDate.formattedDate }}: {{ order.creationDate.formattedTime }}</span>

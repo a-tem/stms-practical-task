@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from "@angular/core";
+import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef } from "@angular/core";
 import { Store } from "@ngrx/store";
 
 import * as OrdersActions from '../_state/orders.actions';
@@ -24,14 +24,19 @@ export class OrdersComponent implements OnInit, OnDestroy {
   favoriteItemsIds = [];
   subs$ = new Subscription();
 
+  filteredList: Order[];
+
   constructor(
-    private globalStore: Store
+    private globalStore: Store,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
   
     this.ordersList$ = this.globalStore
       .select(OrdersSelectors.selectOrdersList);
+
+    const ordersListSubs = this.ordersList$.subscribe(list => this.filteredList = list);
 
     this.sideEffects$ = this.globalStore
       .select(OrdersSelectors.selectSideEffectsStatus);
@@ -53,6 +58,11 @@ export class OrdersComponent implements OnInit, OnDestroy {
 
   isAddedToFavorite(order: Order): boolean {
     return this.favoriteItemsIds.includes(order.identifier);
+  }
+
+  setFilteredList(list: Order[]) {
+    this.filteredList = list;
+    this.cdr.markForCheck();
   }
 
   ngOnDestroy() {
